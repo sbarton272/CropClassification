@@ -5,15 +5,29 @@ close all
 
 %% Load
 
+% TODO
+% - Allign
+% - Fix labels
+% - 
+
 I = im2double(imread('../../data/livingstonIL/example.png'));
+labelI = im2double(imread('../../data/livingstonIL/exampleLabels.tif'));
 
-figure; imshow(I);
+figure; 
+subplot(2,1,1); imshow(I);
+subplot(2,1,2); imshow(labelI);
 
-labI = RGB2Lab(I);
-figure;
-subplot(3,1,1); imagesc(labI(:,:,1));
-subplot(3,1,2); imagesc(labI(:,:,2));
-subplot(3,1,3); imagesc(labI(:,:,3));
+g1 = rgb2gray(I);
+g2 = rgb2gray(labelI);
+overlay = zeros(size(I));
+overlay(:,:,1) = g1; overlay(:,:,3) = .5*g2;
+figure; imshow(overlay);
+
+%labI = RGB2Lab(I);
+%figure;
+%subplot(3,1,1); imagesc(labI(:,:,1));
+%subplot(3,1,2); imagesc(labI(:,:,2));
+%subplot(3,1,3); imagesc(labI(:,:,3));
 
 %% SLIC
 
