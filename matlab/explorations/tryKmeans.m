@@ -4,24 +4,12 @@ function labels = tryKmeans(segments, I, K)
 pixels = valuesPerLabel(I, segments);
 
 % Create feature vector
-BIN_SIZE = 256;
-numChannels = size(pixels(1).values,3);
-numPixels = length(pixels);
-featureVect = zeros(numPixels, BIN_SIZE*numChannels); 
-for i = 1:numPixels
-   pixel = pixels(i);
-   featureVect(i,:) = getFeatures(pixel.values, BIN_SIZE);
-end
+featureVect = getColorFeatures(pixels);
 
 % Kmeans
-pxLables = kmeans(featureVect, K, 'distance', 'cityblock');
+pxLabels = kmeans(featureVect, K, 'distance', 'cityblock');
 
-% Relabel image
-labels = zeros(size(I,1),size(I,2));
-for i = 1:numPixels
-   pixel = pixels(i);
-   labels = labels + pixel.mask * pxLables(i);
-end
+labels = relabelImg(I, pixels, pxLabels);
 
 end
 
