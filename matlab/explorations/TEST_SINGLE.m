@@ -39,6 +39,6 @@ segI = vizSlic(segments, I, regionSz, regulizer);
 
 %% Kmeans
 
-K = 5;
+K = 8;
 kmeansLabels = tryKmeans(segments, I, K);
 figure; imshow(kmeansLabels/K);
