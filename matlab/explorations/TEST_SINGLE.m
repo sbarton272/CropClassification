@@ -5,8 +5,8 @@ close all
 
 %% Load
 
-I = im2double(imread('../../data/livingstonIL/example.png'));
-r = load('../../data/livingstonIL/simpleLabels.mat');
+I = im2double(imread('../../data/example.png'));
+r = load('../../data/exampleLabels.mat');
 gtI = r.imIndx;
 mapping = r.mapping;
 
