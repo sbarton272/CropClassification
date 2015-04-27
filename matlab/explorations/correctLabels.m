@@ -17,21 +17,22 @@ mapping = {'corn', 'soybeans', 'grass', 'forest', ...
 
 labelIm = im2double(imread(labelName));
 
-regionSz = 50;
-regulizer = 1;
+regionSz = 25;
+regulizer = 2;
 segments = trySlic(labelIm, regionSz, regulizer, true);
-segI = vizSlic(segments, labelIm, regionSz, regulizer);
+[segI, segI2] = vizSlic(segments, labelIm, regionSz, regulizer);
 
 % knnsearch
 rgb = toRgb(segI);
 indx = knnsearch(possibleLabels, rgb, 'dist', 'cityblock');
 im = possibleLabels(indx, :);
-sz = size(setI);
+sz = size(segI);
 im = fromRgb(im, sz);
 
-figure; subplot(3,1,1); imshow(labelIm);
-subplot(3,1,2); imshow(segI);
-subplot(3,1,3); imshow(im);
+figure; subplot(2,2,1); imshow(labelIm);
+subplot(2,2,3); imshow(segI);
+subplot(2,2,4); imshow(segI2);
+subplot(2,2,2); imshow(im);
 
 imIndx = reshape(indx, sz(1:2));
 
@@ -39,7 +40,6 @@ imwrite(im, 'corrected.png', 'png');
 
 figure; imshow(imIndx / max(imIndx(:)));
 save('simpleLabels.mat', 'imIndx', 'mapping');
-hist(imIndx(:), 8);
 
 end
 
