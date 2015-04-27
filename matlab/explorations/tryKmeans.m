@@ -4,7 +4,8 @@ function labels = tryKmeans(segments, I, K)
 pixels = valuesPerLabel(I, segments);
 
 % Create feature vector
-featureVect = getColorFeatures(pixels);
+%featureVect = getColorFeatures(pixels);
+featureVect = getWaveletFeatures(I, pixels);
 
 % Kmeans
 pxLabels = kmeans(featureVect, K, 'distance', 'cityblock');

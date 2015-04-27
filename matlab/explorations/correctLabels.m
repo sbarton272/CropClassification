@@ -1,5 +1,7 @@
 function correctLabels(labelName)
 
+% TODO decimation step
+
 possibleLabels = [255, 212, 0; ...
     38, 115, 0; ...
     233, 255, 190; ...
@@ -20,17 +22,15 @@ regulizer = 1;
 segments = trySlic(labelIm, regionSz, regulizer, true);
 segI = vizSlic(segments, labelIm, regionSz, regulizer);
 
-sharp = imsharpen(labelIm,'Radius',3,'Amount',.5, 'Threshold',0);
-
 % knnsearch
 rgb = toRgb(segI);
 indx = knnsearch(possibleLabels, rgb, 'dist', 'cityblock');
 im = possibleLabels(indx, :);
-sz = size(sharp);
+sz = size(setI);
 im = fromRgb(im, sz);
 
 figure; subplot(3,1,1); imshow(labelIm);
-subplot(3,1,2); imshow(sharp);
+subplot(3,1,2); imshow(segI);
 subplot(3,1,3); imshow(im);
 
 imIndx = reshape(indx, sz(1:2));

@@ -34,9 +34,7 @@ segI = vizSlic(segments, I, regionSz, regulizer);
 
 K = length(unique(gtI));
 
-waveFeatures = getWaveletFeatures(I);
-
-kmeansLabels = tryKmeans(segments, waveFeatures, K);
+kmeansLabels = tryKmeans(segments, labI, K);
 figure; imshow(kmeansLabels/K);
 
 %% Accuracy
