@@ -5,10 +5,15 @@ close all
 
 %% Load
 
-I = im2double(imread('../../data/example1.png'));
 r = load('../../data/example1Labels.mat');
-gtI = r.imIndx;
 mapping = r.mapping;
+
+data = load('../../data/labeledData.mat');
+data = data.labeledData;
+
+I = data(1).image;
+gtI = data(1).gt;
+wordmapI = data(1).wordmap;
 
 g1 = rgb2gray(I);
 g2 = gtI / max(gtI(:));
@@ -27,14 +32,14 @@ figure; imshow(overlay);
 
 regionSz = 50;
 regulizer = .1;
-segments = trySlic(RGB2Lab(I), regionSz, regulizer, true);
+segments = trySlic(I, regionSz, regulizer, true, true);
 segI = vizSlic(segments, I, regionSz, regulizer);
 
 %% Kmeans
 
 K = length(unique(gtI));
 
-kmeansLabels = tryKmeans(segments, I, K);
+kmeansLabels = tryKmeans(segments, wordmapI, K);
 figure; imshow(kmeansLabels/K);
 
 %% Accuracy

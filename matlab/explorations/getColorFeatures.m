@@ -16,7 +16,9 @@ function features = getFeatures(values, binSz)
     features = [];
     for ch = 1:size(values,2)
         chVals = values(:,ch);
-        features = [features, hist(chVals, binSz)];
+        h = hist(chVals, binSz);
+        h = h / sum(h);
+        features = [features, h];
     end
     features = features';
 end
