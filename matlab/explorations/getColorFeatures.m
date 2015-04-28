@@ -1,7 +1,7 @@
 function featureVect = getColorFeatures(pixels)
 
 BIN_SIZE = 256;
-numChannels = size(pixels(1).values,3);
+numChannels = size(pixels(1).values,2);
 numPixels = length(pixels);
 featureVect = zeros(numPixels, BIN_SIZE*numChannels); 
 for i = 1:numPixels
@@ -14,8 +14,9 @@ end
 function features = getFeatures(values, binSz)
 
     features = [];
-    for ch = 1:size(values,3)
-        chVals = values(:,:,ch);
-        features = [features, hist(chVals(:), binSz)];
+    for ch = 1:size(values,2)
+        chVals = values(:,ch);
+        features = [features, hist(chVals, binSz)];
     end
+    features = features';
 end

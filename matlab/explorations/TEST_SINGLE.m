@@ -5,8 +5,8 @@ close all
 
 %% Load
 
-I = im2double(imread('../../data/example.png'));
-r = load('../../data/exampleLabels.mat');
+I = im2double(imread('../../data/example1.png'));
+r = load('../../data/example1Labels.mat');
 gtI = r.imIndx;
 mapping = r.mapping;
 
@@ -27,14 +27,14 @@ figure; imshow(overlay);
 
 regionSz = 50;
 regulizer = .1;
-segments = trySlic(I, regionSz, regulizer, true);
+segments = trySlic(RGB2Lab(I), regionSz, regulizer, true);
 segI = vizSlic(segments, I, regionSz, regulizer);
 
 %% Kmeans
 
 K = length(unique(gtI));
 
-kmeansLabels = tryKmeans(segments, labI, K);
+kmeansLabels = tryKmeans(segments, I, K);
 figure; imshow(kmeansLabels/K);
 
 %% Accuracy

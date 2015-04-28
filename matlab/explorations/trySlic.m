@@ -1,11 +1,15 @@
-function segments = trySlic(I, regionSz, regulizer, verbose)
+function segments = trySlic(I, regionSz, regulizer, verbose, lab)
 
 %% Install lib
 run '../libraries/vlfeat-0.9.20/toolbox/vl_setup'
 
 %% Convert to LAB space
-colorTransform = makecform('srgb2lab');
-labI = applycform(I, colorTransform);
+if lab
+    colorTransform = makecform('srgb2lab');
+    labI = applycform(I, colorTransform);
+else
+    labI = I;
+end
 
 %% Convert to single precision
 singleI = single(labI);
