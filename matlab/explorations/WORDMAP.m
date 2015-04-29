@@ -54,7 +54,7 @@ subplot(2,1,1); imshow(trainGt / max(trainGt(:)));
 subplot(2,1,2); imshow(vizLabels / max(vizLabels(:)));
 
 %% Model
-mdl = fitcknn(featureVect, pxLabels, 'distance', 'citymap', 'NumNeighbors', 5);
+mdl = fitcknn(featureVect, pxLabels, 'distance', 'euclidean', 'NumNeighbors', 5);
 
 %% Testing
 

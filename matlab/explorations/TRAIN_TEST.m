@@ -41,11 +41,16 @@ trainSeg = trySlic(trainGt, 25, 2, true, false);
 % Features
 rgbPixels = valuesPerLabel(trainI, trainSeg);
 labPixels = valuesPerLabel(RGB2Lab(trainI), trainSeg);
+
+% Get pixels that have accurate gt covering
+[pxLabels, rgbPixels] = getPixelLabels(trainGt, rgbPixels);
+[~, labPixels] = getPixelLabels(trainGt, labPixels);
+
+
 featureVect1 = getColorFeatures(rgbPixels);
 featureVect2 = getColorFeatures(labPixels);
 featureVect3 = getWaveletFeatures(trainI, rgbPixels);
 featureVect = [featureVect1, featureVect2, featureVect3];
-pxLabels = getPixelLabels(trainGt, rgbPixels);
 
 vizLabels = relabelImg(trainI, rgbPixels, pxLabels);
 figure; 
